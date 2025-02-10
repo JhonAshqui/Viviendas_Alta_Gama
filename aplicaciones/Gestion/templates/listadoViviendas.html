@@ -1,0 +1,57 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<br>
+<div class="container">
+    <h1>Lista de Viviendas</h1>
+    <table class="table table-bordered table-striped table-hover" id="tbl_viviendas">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PROYECTO</th>
+                <th>CLIENTE VIP</th>
+                <th>DIRECCIÓN</th>
+                <th>METROS CUADRADOS</th>
+                <th>PRECIO</th>
+                <th>ESTADO</th>
+                <th>FOTO</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vivienda in viviendas %}
+            <tr>
+                <td>{{ vivienda.id }}</td>
+                <td>{{ vivienda.proyecto.nombre }}</td>
+                <td>{{ vivienda.cliente.nombre}}</td>
+                <td>{{ vivienda.direccion }}</td>
+                <td>{{ vivienda.metros_cuadrados }}</td>
+                <td>${{ vivienda.precio }}</td>
+                <td>{{ vivienda.get_estado_display }}</td>
+                <td>
+                    {% if vivienda.foto and vivienda.foto.url %}
+                        <a href="{{ vivienda.foto.url }}" target="_blank"><img src="{{ vivienda.foto.url }}" alt=""
+                            height="100px" width="100px"></a> <br>
+                        <a download href="{{ vivienda.foto.url }}">Descargar</a>
+                    {% else %}
+                        <p>No hay foto disponible.</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/editarVivienda/{{ vivienda.id }}" class="btn btn-warning">Editar</a>
+                    <a onclick="return confirm('¿Está seguro?');" href="/eliminarVivienda/{{ vivienda.id }}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    table = new DataTable('#tbl_viviendas', {
+        layout: {
+            topStart: {
+                buttons: ['excelHtml5', 'csvHtml5', 'pdfHtml5']
+            }
+        }
+    });
+</script>
+{% endblock %}

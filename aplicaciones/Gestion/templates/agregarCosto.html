@@ -1,0 +1,60 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<div class="container d-flex justify-content-center mt-5">
+    <form action="/guardarCosto/" id="frm_nuevo_costo" method="post" class="w-50">
+        <h3 class="mb-4 text-center">Agregar Nuevo Costo</h3>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="txt_proyecto" class="form-label"><b>Proyecto:</b></label>
+            <select name="txt_proyecto" id="txt_proyecto" class="form-control" required>
+                <option value="">-- Seleccione el Proyecto --</option>
+                {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.id }}">{{ proyecto.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="txt_vivienda" class="form-label"><b>Vivienda:</b></label>
+            <select name="txt_vivienda" id="txt_vivienda" class="form-control">
+                <option value="">-- Seleccione la Vivienda --</option>
+                {% for vivienda in viviendas %}
+                    <option value="{{ vivienda.id }}">{{ vivienda.direccion }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="txt_descripcion" class="form-label"><b>Descripción:</b></label>
+            <input type="text" name="txt_descripcion" id="txt_descripcion" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="txt_monto" class="form-label"><b>Monto:</b></label>
+            <input type="number" step="0.01" name="txt_monto" id="txt_monto" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="txt_fecha" class="form-label"><b>Fecha:</b></label>
+            <input type="date" name="txt_fecha" id="txt_fecha" class="form-control" required>
+        </div>
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="/listadoCostos/" class="btn btn-info">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#frm_nuevo_costo").validate({
+        rules: {
+            "txt_proyecto": { required: true },
+            "txt_descripcion": { required: true },
+            "txt_monto": { required: true },
+            "txt_fecha": { required: true }
+        },
+        messages: {
+            "txt_proyecto": { required: "Seleccione un proyecto" },
+            "txt_descripcion": { required: "Ingrese una descripción" },
+            "txt_monto": { required: "Ingrese el monto" },
+            "txt_fecha": { required: "Seleccione una fecha" }
+        }
+    });
+</script>
+{% endblock %}

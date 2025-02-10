@@ -1,0 +1,79 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<div class="container d-flex justify-content-center mt-5">
+    <form enctype="multipart/form-data" action="/procesarEdicionProyecto/" id="frm_editar_proyecto" method="post" class="w-50">
+        <h3 class="mb-4 text-center">Editar Proyecto</h3>
+        {% csrf_token %}
+        <input type="hidden" name="id_proyecto" value="{{ proyecto.id }}">
+
+        <div class="mb-3">
+            <label for="txt_nombre" class="form-label"><b>Nombre del Proyecto:</b></label>
+            <input type="text" name="txt_nombre" id="txt_nombre" class="form-control" value="{{ proyecto.nombre }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="txt_descripcion" class="form-label"><b>Descripción:</b></label>
+            <textarea name="txt_descripcion" id="txt_descripcion" class="form-control" required>{{ proyecto.descripcion }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="txt_fecha_inicio" class="form-label"><b>Fecha de Inicio:</b></label>
+            <input type="date" name="txt_fecha_inicio" id="txt_fecha_inicio" class="form-control" value="{{ proyecto.fecha_inicio|date:'Y-m-d' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="txt_fecha_fin" class="form-label"><b>Fecha de Fin:</b></label>
+            <input type="date" name="txt_fecha_fin" id="txt_fecha_fin" class="form-control" value="{{ proyecto.fecha_fin|date:'Y-m-d' }}">
+        </div>
+
+        <div class="mb-3 text-center">
+            <label for="foto_proyecto" class="form-label"><b>Foto del Proyecto:</b></label>
+            <div class="d-flex justify-content-center">
+                {% if proyecto.foto and proyecto.foto.url %}
+                    <img src="{{ proyecto.foto.url }}" alt="Foto actual" width="200" class="rounded mb-3">
+                    <br>
+                {% else %}
+                    <p>No hay imagen disponible.</p>
+                {% endif %}
+            </div>
+            <input type="file" name="foto_proyecto" id="foto_proyecto" class="form-control">
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            <a href="/listadoProyectos/" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#frm_editar_proyecto").validate({
+            rules: {
+                "txt_nombre": { required: true },
+                "txt_descripcion": { required: true },
+                "txt_fecha_inicio": { required: true },
+                "txt_fecha_fin": {
+                    required: false,
+                    date: true
+                }
+            },
+            messages: {
+                "txt_nombre": { required: "Ingrese el nombre del proyecto" },
+                "txt_descripcion": { required: "Ingrese una descripción" },
+                "txt_fecha_inicio": { required: "Ingrese la fecha de inicio" },
+                "txt_fecha_fin": { date: "Ingrese una fecha válida" }
+            }
+        });
+
+        $('#foto_proyecto').fileinput({
+            language: "es",
+            allowedFileExtensions: ["jpg", "jpeg", "png", "gif", "bmp", "webp"],
+            showPreview: true,
+            showCaption: false,
+            dropZoneEnabled: true,
+            showClose: false
+        });
+    });
+</script>
+{% endblock %}

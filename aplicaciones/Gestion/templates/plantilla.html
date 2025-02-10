@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Matriculas</title>
+    <!--Importar jQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!--Importadno izitoast-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!--Importar jQuery validate-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+
+
+    <!-- Favicons -->
+    <!-- <link href="{% static 'plantilla/assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'plantilla/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'plantilla/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plantilla/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'plantilla/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'plantilla/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'plantilla/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'plantilla/assets/css/main.css' %}" rel="stylesheet">
+    <!-- Importar datatable -->
+    <link rel="stylesheet" href="//cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+    <script src="//cdn.datatables.net/2.2.1/js/dataTables.min.js" > </script>
+
+    <!-- link CSS de JHON -->
+     <link rel="stylesheet" href="{% static 'plantilla/assets/css/css1.css' %}">
+      <!-- importar filinput -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/js/fileinput.min.js" integrity="sha512-0wQvB58Ha5coWmcgtg4f11CTSSxfrfLClUp9Vy0qhzYzCZDSnoB4Vhu5JXJFs7rU24LE6JsH+6hpP7vQ22lk5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.4/css/fileinput.min.css" integrity="sha512-yDVMONIXJPPAoULZ92Ygngsn8ZUGB4ejm6fCc6q9ZvdH8blFAOgg75XZSEaAJ5m4E/yPI1BAi5fF2axMHVuZ5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.1/js/locales/es.min.js"></script>
+    <!-- Botones para exportar -->
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+</head>
+<body>
+    <header id="header" class="header dark-background d-flex flex-column">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
+      
+        <div class="profile-img">
+          <img src="{% static 'plantilla/assets/img/foto.jpg' %}" alt="" class="img-fluid rounded-fluid">
+        </div>
+      
+        <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="assets/img/logo.png" alt=""> -->
+          <h1 class="sitename">Jhon Ashqui</h1>
+        </a>
+      
+        <div class="social-links text-center">
+          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
+        </div>
+      
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="/" ><i class="bi bi-house navicon"></i>Home</a></li>
+            <li class="dropdown"><a href="#"><i class="bi bi-briefcase navicon"></i> <span>Proyecto</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="/listadoProyectos/"><i class="bi bi-eye"></i> Ver Proyecto</a></li>
+                <li><a href="/agregarProyecto/"><i class="bi bi-plus-circle"></i> Agregar Proyecto</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a href="#"><i class="bi bi-person navicon"></i> <span>ClienteVIP</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="/listadoClientesVIP/"><i class="bi bi-eye"></i> Ver ClienteVIP</a></li>
+                  <li><a href="/agregarClienteVIP/"><i class="bi bi-plus-circle"></i> Agregar ClienteVIP</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#"><i class="bi bi-house-door navicon"></i> <span>Vivienda</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="/listadoViviendas/"><i class="bi bi-eye"></i> Ver Vivienda</a></li>
+                  <li><a href="/agregarVivienda/"><i class="bi bi-plus-circle"></i> Agregar Vivienda</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#"><i class="bi bi-cash navicon"></i> <span>Costo</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="/listadoCostos/"><i class="bi bi-eye"></i> Ver Costo</a></li>
+                  <li><a href="/agregarCosto/"><i class="bi bi-plus-circle"></i> Agregar Costo</a></li>
+                </ul>
+            </li>
+            <!-- <li class="dropdown"><a href="#"><i class="bi bi-person navicon"></i> <span>Reporte</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="/listadoSugerencias/"><i class="bi bi-eye"></i> Ver Reporte</a></li>
+                  <li><a href="/agregarSugerencia/"><i class="bi bi-plus-circle"></i> Agregar Reporte</a></li>
+                </ul>
+            </li> -->
+          </ul>
+        </nav>
+      
+      </header>
+    <!-- <center>
+        <nav class="navbar navbar-expand-lg navbar-success  ">
+            <div class="container d-flex align-items-center">
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="/" class="btn btn-dark">Inicio</a>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Reparaciones
+                        </button>
+                        <ul class="dropdown-menu ">
+                            <li><a class="dropdown-item " href="/listadoReparaciones/">Listado de Reparaciones</a></li>
+                            <li><a class="dropdown-item" href="/agregarReparacion/">Agregar Reparacion</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </center> -->
+    
+    {% block contenido %}
+    
+
+    <!--aqui se presentrara el contenido especifico de cada una de las paginas  -->
+    {% endblock %}
+
+    <!-- <br><br><br>
+    <div style="background-color: #1a1071; height: 140px; text-align: center;color: white;">
+        <br>
+        <h4>
+            <b>Desarrollado por:</b>
+            Jhon Ashqui &copy;
+        </h4>
+        <br>
+        2024
+        <br>
+    </div> -->
+    <!--Verificando y mostrando mensajes de informacion-->
+    {% if messages %}
+        {% for mensajeConfirmacion in messages %}
+            <script>
+                if("{{mensajeConfirmacion.tags}}"
+                    =="success"){
+                    //  alert(":D) - {{mensajeConfirmacion}}")};
+            iziToast.success({
+                title: 'Confirmacion',
+                message: '{{mensajeConfirmacion}}',
+                position:'topRight'
+            });
+            }
+            </script>
+        {% endfor %}
+    {% endif %}
+
+    <style>
+        label.error{
+            color: red;
+        }
+    </style>
+    <script>
+        jQuery.validator.addMethod("letras", function(value, element) {            
+            return this.optional(element) || /^[A-Za-zÁÉÍÓÚÑáéíóúñ ]*$/.test(value);
+           
+          }, "Este campo solo acepta letras"); 
+        jQuery.validator.addMethod("cedula", function(value, element) {
+            if (value.length != 10) {
+                return false;
+            }
+            const digits = value.split('').map(Number);
+            const provinceCode = digits[0] * 10 + digits[1];
+            if (provinceCode < 1 || provinceCode > 24) {
+                return false;
+            }
+            const checkDigit = digits.pop();
+            const sum = digits.reduce((acc, digit, index) => {
+                if (index % 2 === 0) {
+                    const double = digit * 2;
+                    return acc + (double > 9 ? double - 9 : double);
+                }
+                return acc + digit;
+            }, 0);
+            const calculatedCheckDigit = sum % 10 === 0 ? 0 : 10 - (sum % 10);
+            return checkDigit === calculatedCheckDigit;
+        }, "Por favor, ingresa una cédula válida.");
+        jQuery.validator.addMethod("celularE", function(value, element) {
+            return this.optional(element) || /^09\d{8}$/.test(value);
+        },"Por favor, ingresa una celular válida.");
+        jQuery.validator.addMethod("fecha", function(value, element) {
+            var fechaIngresada = new Date(value); // Fecha ingresada en el campo
+            var fechaActual = new Date(); // Fecha actual
+            
+            // Configuramos la fecha actual en 00:00:00 para evitar problemas con la hora
+            fechaActual.setHours(0, 0, 0, 0);
+            
+            return this.optional(element) || fechaIngresada >= fechaActual;
+        }, "La fecha no puede ser anterior a la fecha actual.");
+                
+
+    </script>
+    <!-- Vendor JS Files -->
+    <script src="{% static 'plantilla/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/typed.js/typed.umd.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'plantilla/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'plantilla/assets/js/main.js' %}"></script>
+</body>
+</html>

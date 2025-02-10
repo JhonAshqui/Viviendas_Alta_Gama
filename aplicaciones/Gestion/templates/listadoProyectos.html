@@ -1,0 +1,53 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<br>
+<div class="container">
+    <h1>Lista de Proyectos</h1>
+    <table class="table table-bordered table-striped table-hover" id="tbl_proyectos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE DEL PROYECTO</th>
+                <th>DESCRIPCIÓN</th>
+                <th>FECHA DE INICIO</th>
+                <th>FECHA DE FINALIZACIÓN</th>
+                <th>DOCUMENTO</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in proyectos %}
+            <tr>
+                <td>{{ proyecto.id }}</td>
+                <td>{{ proyecto.nombre }}</td>
+                <td>{{ proyecto.descripcion }}</td>
+                <td>{{ proyecto.fecha_inicio }}</td>
+                <td>{{ proyecto.fecha_fin }}</td>
+                <td>
+                    {% if proyecto.foto and proyecto.foto.url %}
+                        <a href="{{ proyecto.foto.url }}" target="_blank"><img src="{{proyecto.foto.url}}" alt=""
+                            height="100px" width="100px"></a> <br>
+                        <a download href="{{ proyecto.foto.url }}">Descargar</a>
+                    {% else %}
+                        <p>No hay documento disponible.</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/editarProyecto/{{ proyecto.id }}" class="btn btn-warning">Editar</a>
+                    <a onclick="return confirm('¿Está seguro?');" href="/eliminarProyecto/{{ proyecto.id }}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    table = new DataTable('#tbl_proyectos', {
+        layout: {
+            topStart: {
+                buttons: ['excelHtml5', 'csvHtml5', 'pdfHtml5']
+            }
+        }
+    });
+</script>
+{% endblock %}

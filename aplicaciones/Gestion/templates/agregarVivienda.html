@@ -1,0 +1,104 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<div class="container d-flex justify-content-center mt-5">
+    <form enctype="multipart/form-data" action="/guardarVivienda/" id="frm_nueva_vivienda" method="post" class="w-50">
+        <h3 class="mb-4 text-center">Agregar Nueva Vivienda</h3>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="txt_proyecto" class="form-label"><b>Proyecto:</b></label>
+            <select name="txt_proyecto" id="txt_proyecto" class="form-control" required>
+                <option value="">-- Seleccion el Proyecto --</option>
+                {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.id }}">{{ proyecto.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="txt_cliente" class="form-label"><b>Cliente VIP:</b></label>
+            <select name="txt_cliente" id="txt_cliente" class="form-control">
+                <option value="">-- Seleccion el Cliente --</option>
+                {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="txt_direccion" class="form-label"><b>Dirección:</b></label>
+            <input type="text" name="txt_direccion" id="txt_direccion" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="txt_metros_cuadrados" class="form-label"><b>Metros Cuadrados:</b></label>
+            <input type="number" step="0.01" name="txt_metros_cuadrados" id="txt_metros_cuadrados" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="txt_precio" class="form-label"><b>Precio:</b></label>
+            <input type="number" step="0.01" name="txt_precio" id="txt_precio" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="txt_estado" class="form-label"><b>Estado:</b></label>
+            <select name="txt_estado" id="txt_estado" class="form-control" required>
+                <option value="En construcción">En construcción</option>
+                <option value="Terminada">Terminada</option>
+                <option value="Vendida">Vendida</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="foto_vivienda" class="form-label"><b>Foto de la Vivienda:</b></label>
+            <input type="file" name="foto_vivienda" id="foto_vivienda" class="form-control">
+        </div>
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="/listadoViviendas/" class="btn btn-info">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#frm_nueva_vivienda").validate({
+        rules: {
+            "txt_proyecto": {
+                required: true
+            },
+            "txt_direccion": {
+                required: true
+            },
+            "txt_metros_cuadrados": {
+                required: true
+            },
+            "txt_precio": {
+                required: true
+            },
+            "txt_estado": {
+                required: true
+            }
+        },
+        messages: {
+            "txt_proyecto": {
+                required: "Seleccione un proyecto"
+            },
+            "txt_direccion": {
+                required: "Ingrese la dirección de la vivienda"
+            },
+            "txt_metros_cuadrados": {
+                required: "Ingrese los metros cuadrados"
+            },
+            "txt_precio": {
+                required: "Ingrese el precio de la vivienda"
+            },
+            "txt_estado": {
+                required: "Seleccione el estado de la vivienda"
+            }
+        }
+    });
+</script>
+
+<script>
+    $('#foto_vivienda').fileinput({
+        language: "es",
+        allowedFileExtensions: ["jpg", "jpeg", "png", "gif", "bmp", "webp"],
+        showCaption: false,
+        dropZoneEnabled: true,
+        showClose: false
+    });
+</script>
+{% endblock %}

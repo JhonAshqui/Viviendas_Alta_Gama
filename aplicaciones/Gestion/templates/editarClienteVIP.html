@@ -1,0 +1,48 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<div class="container d-flex justify-content-center mt-5">
+    <form enctype="multipart/form-data" action="/procesarEdicionClienteVIP/" id="frm_editar_clienteVIP" method="post" class="w-50">
+        <h3 class="mb-4 text-center">Editar Cliente VIP</h3>
+        {% csrf_token %}
+        <input type="hidden" name="id_clienteVIP" value="{{ cliente.id }}">
+
+        <div class="mb-3">
+            <label for="txt_nombre" class="form-label"><b>Nombre:</b></label>
+            <input type="text" name="txt_nombre" id="txt_nombre" class="form-control" value="{{ cliente.nombre }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="txt_email" class="form-label"><b>Email:</b></label>
+            <input type="email" name="txt_email" id="txt_email" class="form-control" value="{{ cliente.email }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="txt_telefono" class="form-label"><b>Teléfono:</b></label>
+            <input type="text" name="txt_telefono" id="txt_telefono" class="form-control" value="{{ cliente.telefono }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="txt_direccion" class="form-label"><b>Dirección:</b></label>
+            <textarea name="txt_direccion" id="txt_direccion" class="form-control">{{ cliente.direccion }}</textarea>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+            <a href="/listadoClientesVIP/" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("#frm_editar_clienteVIP").validate({
+        rules: {
+            "txt_nombre": { required: true },
+            "txt_email": { required: true, email: true }
+        },
+        messages: {
+            "txt_nombre": { required: "Ingrese el nombre del cliente" },
+            "txt_email": { required: "Ingrese el email", email: "Ingrese un email válido" }
+        }
+    });
+</script>
+{% endblock %}

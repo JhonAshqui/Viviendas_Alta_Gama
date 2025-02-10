@@ -1,0 +1,46 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<br>
+<div class="container">
+    <h1>Lista de Costos</h1>
+    <table class="table table-bordered table-striped table-hover" id="tbl_costos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PROYECTO</th>
+                <th>VIVIENDA</th>
+                <th>DESCRIPCIÓN</th>
+                <th>MONTO</th>
+                <th>FECHA</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for costo in costos %}
+            <tr>
+                <td>{{ costo.id }}</td>
+                <td>{{ costo.proyecto.nombre }}</td>
+                <td>{{ costo.vivienda.direccion }}</td>
+                <td>{{ costo.descripcion }}</td>
+                <td>${{ costo.monto }}</td>
+                <td>{{ costo.fecha }}</td>
+                <td>
+                    <a href="/editarCosto/{{ costo.id }}" class="btn btn-warning">Editar</a>
+                    <a onclick="return confirm('¿Está seguro?');" href="/eliminarCosto/{{ costo.id }}" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    table = new DataTable('#tbl_costos', {
+        layout: {
+            topStart: {
+                buttons: ['excelHtml5', 'csvHtml5', 'pdfHtml5']
+            }
+        }
+    });
+</script>
+
+{% endblock %}
